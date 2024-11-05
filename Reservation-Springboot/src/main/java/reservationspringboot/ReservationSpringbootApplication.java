@@ -1,4 +1,4 @@
-package com.example.reservationspringboot;
+package reservationspringboot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
