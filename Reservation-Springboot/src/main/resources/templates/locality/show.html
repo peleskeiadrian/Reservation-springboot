@@ -7,7 +7,6 @@
 <body>
 <div class="container">
     <div layout:fragment="content">
-        <h1 th:text="${locality.postalCode} +' '+ ${locality.locality}">1000 Bruxelles</h1>
         <h1 th:text="|${locality.postalCode}  ${locality.locality}|">1000 Bruxelles</h1>
 
         <ul th:unless="${#lists.isEmpty(locality.locations)}">
@@ -22,3 +21,4 @@
 </div>
 </body>
 </html>
+
