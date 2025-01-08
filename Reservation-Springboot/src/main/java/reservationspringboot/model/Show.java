@@ -48,6 +48,28 @@ public class Show {
     @OneToMany(targetEntity=Representation.class, mappedBy="show")
     private List<Representation> representations = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "shows")
+    private List<ArtistType> artistTypes = new ArrayList<>();
+
+    public List<ArtistType> getArtistTypes() {
+        return artistTypes;
+    }
+    public Show addArtistType(ArtistType artistType) {
+        if(!this.artistTypes.contains(artistType)) {
+            this.artistTypes.add(artistType);
+            artistType.addShow(this);
+        }
+        return this;
+    }
+
+    public Show removeArtistType(ArtistType artistType) {
+        if(this.artistTypes.contains(artistType)) {
+            this.artistTypes.remove(artistType);
+            artistType.getShows().remove(this);
+        }
+        return this;
+    }
+
     public List<Representation> getRepresentations() {
         return representations;
     }
