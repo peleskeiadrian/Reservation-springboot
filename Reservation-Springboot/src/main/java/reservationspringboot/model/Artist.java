@@ -1,44 +1,39 @@
 package reservationspringboot.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="artists")
 public class Artist {
   @Id
-  @GeneratedValue(strategy=GenerationType.IDENTITY)
+  @GeneratedValue(strategy= GenerationType.AUTO)
   private Long id;
-
-  @NotBlank(message = "The firstname must not be empty.")
-  @Size(min=2, max=60, message = "The firstname must be between 2 and 60 characters long.")
   private String firstname;
-
-  @NotBlank(message = "The lastname must not be empty.")
-  @Size(min=2, max=60, message = "The firstname must be between 2 and 60 characters long.")
   private String lastname;
-  @ManyToMany(mappedBy = "artists")
-  private List<Type> types = new ArrayList<>();
+  @ManyToMany(cascade = CascadeType.ALL)
+  @JoinTable(
+          name = "artist_type",
+          joinColumns = @JoinColumn(name = "artist_id"),
+          inverseJoinColumns = @JoinColumn(name = "type_id")
+  )
+  private Set<Type> types = new HashSet<>();
 
   protected Artist() {}
-
 
   public Artist(String firstname, String lastname) {
     this.firstname = firstname;
     this.lastname = lastname;
   }
 
-  public Long getId() {
-    return id;
-  }
-
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public Long getId() {
+    return id;
   }
 
   public String getFirstname() {
@@ -57,28 +52,15 @@ public class Artist {
     this.lastname = lastname;
   }
 
-  public List<Type> getTypes() {
+
+
+  public Set<Type> getTypes() {
     return types;
   }
 
-  public Artist addType(Type type) {
-    if(!this.types.contains(type)) {
-      this.types.add(type);
-      type.addArtist(this);
-    }
-
-    return this;
+  public void addType(Type type) {
+    this.types.add(type);
   }
-
-  public Artist removeType(Type type) {
-    if(this.types.contains(type)) {
-      this.types.remove(type);
-      type.getArtists().remove(this);
-    }
-
-    return this;
-  }
-
 
   @Override
   public String toString() {
