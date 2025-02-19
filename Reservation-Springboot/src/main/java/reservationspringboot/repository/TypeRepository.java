@@ -12,3 +12,4 @@ public interface TypeRepository extends CrudRepository<Type, Long> {
     Optional<Type> findById(Long id);
 }
 
+

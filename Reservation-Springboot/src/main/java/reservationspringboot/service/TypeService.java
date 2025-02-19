@@ -43,9 +43,4 @@ public class TypeService {
 
         repository.deleteById(indice);
     }
-
-    public Type get(String id) {
-        return repository.findById(Long.parseLong(id)).orElse(null);
-    }
 }
-

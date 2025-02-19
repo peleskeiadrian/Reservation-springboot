@@ -8,3 +8,4 @@ public interface LocalityRepository extends CrudRepository<Locality, Long> {
     Locality findByLocality(String locality);
 }
 
+

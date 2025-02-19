@@ -1,16 +1,16 @@
 package reservationspringboot.model;
 
-import com.github.slugify.Slugify;
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@NoArgsConstructor
 @Entity
 @Table(name="artist_type")
 public class ArtistType {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
     @ManyToOne
@@ -28,13 +28,8 @@ public class ArtistType {
             inverseJoinColumns = @JoinColumn(name = "show_id"))
     private List<Show> shows = new ArrayList<>();
 
-    protected ArtistType() { }
 
-    public ArtistType(Artist artist, Type type, List<Show> shows) {
-        this.artist = artist;
-        this.type = type;
-        this.shows = shows;
-    }
+
 
     public Long getId() {
         return id;
@@ -85,4 +80,3 @@ public class ArtistType {
     }
 
 }
-

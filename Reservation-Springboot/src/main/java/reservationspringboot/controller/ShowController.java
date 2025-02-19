@@ -35,7 +35,7 @@ public class ShowController {
         Show show = service.get(id);
 
         //Récupérer les artistes du spectacle et les grouper par type
-        Map<String, ArrayList<Artist>> collaborateurs = new TreeMap<>();
+        Map<String,ArrayList<Artist>> collaborateurs = new TreeMap<>();
 
         for(ArtistType at : show.getArtistTypes()) {
             String type = at.getType().getType();
@@ -53,7 +53,6 @@ public class ShowController {
 
         return "show/show";
     }
-
 
 }
 

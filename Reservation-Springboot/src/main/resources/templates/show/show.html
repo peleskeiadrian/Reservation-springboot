@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html layout:decorate="~{layouts/main}"
-      xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout">
+<html xmlns:layout="http://www.ultraq.net.mx/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
 <head>
     <title>Fiche d'un spectacle</title>
 </head>
@@ -9,12 +9,10 @@
     <div layout:fragment="content">
         <h1 th:text="${show.title}">Ayiti</h1>
 
-        <p th:if="${show.posterUrl}"><img src="/images/default.jpg" th:alt="${show.title}"
-                                          th:src="@{'/images/'+${show.posterUrl}}" width="200"></p>
-        <canvas height="100" style="border:1px solid #000000;" th:unless="${show.posterUrl}" width="200"></canvas>
+        <p th:if="${show.posterUrl}"><img th:src="@{'/images/'+${show.posterUrl}}" th:alt="${show.title}" src="/images/default.jpg" width="200"></p>
+        <canvas th:unless="${show.posterUrl}" width="200" height="100" style="border:1px solid #000000;"></canvas>
 
-        <p th:if="${show.location}"><strong>Lieu de création:</strong> <span th:text="${show.location.designation}">Art Center</span>
-        </p>
+        <p th:if="${show.location}"><strong>Lieu de création:</strong> <span th:text="${show.location.designation}">Art Center</span></p>
 
         <p><strong>Prix:</strong> <span th:text="${show.price} + ' €'">9.99 €</span></p>
 
@@ -51,10 +49,10 @@
 	        	</span>
         </p>
 
+
+
         <nav><a th:href="@{/shows}">Retour à l'index</a></nav>
     </div>
 </div>
 </body>
 </html>
-
-

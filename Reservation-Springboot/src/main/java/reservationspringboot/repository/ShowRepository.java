@@ -11,3 +11,4 @@ public interface ShowRepository extends CrudRepository<Show, Long> {
     List<Show> findByLocation(Location location);
 }
 
+

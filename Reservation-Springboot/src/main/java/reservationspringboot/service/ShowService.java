@@ -49,4 +49,3 @@ public class ShowService {
         return repository.findByLocation(location);
     }
 }
-

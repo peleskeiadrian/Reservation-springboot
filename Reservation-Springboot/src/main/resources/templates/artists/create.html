@@ -9,6 +9,7 @@
 </head>
 <body>
 <div class="container">
+  <div id="notification" th:replace="~{main :: notification}"></div>
   <div layout:fragment="content">
     <h1>Nouvel artiste</h1>
 
@@ -20,15 +21,15 @@
 
       <div>
         <label>Firstname:</label>
-        <input type="text" th:field="*{firstname}">
+        <input type="text" th:field="*{artists.firstname}">
         <p th:if="${#fields.hasErrors('firstname')}"
-           th:errors="*{firstname}" th:errorclass="fieldError"></p>
+           th:errors="*{artists.firstname}" th:errorclass="fieldError"></p>
       </div>
       <div>
         <label>Lastname:</label>
-        <input type="text" th:field="*{lastname}">
+        <input type="text" th:field="*{artists.lastname}">
         <p th:if="${#fields.hasErrors('lastname')}"
-           th:errors="*{lastname}" th:errorclass="fieldError"></p>
+           th:errors="*{artists.lastname}" th:errorclass="fieldError"></p>
       </div>
       <div>
         <button type="submit" th:text="Ajouter">Ajouter</button>

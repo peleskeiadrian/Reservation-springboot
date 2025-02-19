@@ -1,20 +1,18 @@
 package reservationspringboot.model;
 
 import jakarta.persistence.*;
-import lombok.Setter;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="types")
+@Table(name = "types")
 public class Type {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Setter
     private String type;
-
     @ManyToMany
     @JoinTable(
             name = "artist_type",
@@ -23,15 +21,10 @@ public class Type {
     private List<Artist> artists = new ArrayList<>();
 
 
-    public Type() { }
-
-    public Type(String type) {
-        this.type = type;
+    protected Type() {
     }
 
-    public Type(Long id, String type) {
-        super();
-        this.id = id;
+    public Type(String type) {
         this.type = type;
     }
 
@@ -39,30 +32,21 @@ public class Type {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public List<Artist> getArtists() {
         return artists;
     }
 
-    public Type addArtist(Artist artist) {
-        if(!this.artists.contains(artist)) {
-            this.artists.add(artist);
-            artist.addType(this);
-        }
 
-        return this;
-    }
 
     public Type removeType(Artist artist) {
         if(this.artists.contains(artist)) {
@@ -73,9 +57,10 @@ public class Type {
         return this;
     }
 
+
     @Override
     public String toString() {
         return "Type [id=" + id + ", type=" + type + "]";
     }
-
 }
+

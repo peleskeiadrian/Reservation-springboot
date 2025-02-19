@@ -10,3 +10,5 @@ public interface ArtistRepository extends CrudRepository<Artist, Long> {
     Artist findById(long id);
 }
 
+
+

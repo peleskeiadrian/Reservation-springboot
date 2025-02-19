@@ -5,8 +5,6 @@ import java.util.List;
 
 import reservationspringboot.model.Artist;
 import reservationspringboot.repository.ArtistRepository;
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,22 +21,26 @@ public class ArtistService {
         return artists;
     }
 
-
     public Artist getArtist(long id) {
-        return artistRepository.findById(id);
+        int indice = Integer.parseInt(String.valueOf(id));
+
+        return artistRepository.findById(indice);
     }
 
     public void addArtist(Artist artist) {
         artistRepository.save(artist);
     }
 
-    public void updateArtist(long id, Artist artist) {
+    public void updateArtist(String id, Artist artist) {
         artistRepository.save(artist);
     }
 
     public void deleteArtist(long id) {
-        artistRepository.deleteById(id);
-    }
+        Long indice = (long) Integer.parseInt(String.valueOf(id));
 
+        artistRepository.deleteById(indice);
+    }
 }
+
+
 

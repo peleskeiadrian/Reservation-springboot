@@ -5,14 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
+import reservationspringboot.enums.UserRole;
 
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name="users")
 public class User {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     private String login;
     private String password;
@@ -20,109 +24,22 @@ public class User {
     private String lastname;
     private String email;
     private String langue;
+
+    @Getter
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
+
     private LocalDateTime created_at;
 
     @ManyToMany(mappedBy = "users")
-    private List<Role> roles = new ArrayList<>();
-
-    protected User() {}
-
-    @ManyToMany
-    @JoinTable(
-        name = "user_representation",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "representation_id")
-    )
     private List<Representation> representations = new ArrayList<>();
 
-    public User(String login, String firstname, String lastname) {
-        this.login = login;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.created_at = LocalDateTime.now();
-    }
+    // Ajout de la relation avec Review
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews = new ArrayList<>();
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getLangue() {
-        return langue;
-    }
-
-    public void setLangue(String langue) {
-        this.langue = langue;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public LocalDateTime getCreated_at() {
-        return created_at;
-    }
-
-    public User addRole(Role role) {
-        if(!this.roles.contains(role)) {
-            this.roles.add(role);
-            role.addUser(this);
-        }
-
-        return this;
-    }
-
-    public User removeRole(Role role) {
-        if(this.roles.contains(role)) {
-            this.roles.remove(role);
-            role.getUsers().remove(this);
-        }
-
-        return this;
-    }
-
-    public List<Representation> getRepresentations() {
-        return representations;
-    }
+    @OneToMany(mappedBy = "user")
+    private List<Reservation> reservation;
 
     public User addRepresentation(Representation representation) {
         if(!this.representations.contains(representation)) {
@@ -142,17 +59,104 @@ public class User {
         return this;
     }
 
+    public User addReview(Review review) {
+        if (!this.reviews.contains(review)) {
+            this.reviews.add(review);
+            review.setUser(this);
+        }
+        return this;
+    }
+
+    public User removeReview(Review review) {
+        if (this.reviews.contains(review)) {
+            this.reviews.remove(review);
+            review.setUser(null);
+        }
+        return this;
+    }
 
     @Override
     public String toString() {
-        return login + "(" + firstname + " " + lastname + ")";
+        return login + "(" + firstname + " " + lastname + " - " + role + ")";
     }
 
-    public String getRole() {
-        return roles.stream()
-                .map(role -> role.toString()) // Appelle toString() de chaque rôle
-                .reduce((role1, role2) -> role1 + ", " + role2)
-                .orElse("No roles");
+    public Long getId() {
+        return id;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getLangue() {
+        return langue;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public LocalDateTime getCreated_at() {
+        return created_at;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setLangue(String langue) {
+        this.langue = langue;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
+    public void setCreated_at(LocalDateTime created_at) {
+        this.created_at = created_at;
+    }
+
+    public List<Representation> getRepresentations() {
+        return representations;
+    }
+
+    public void setRepresentations(List<Representation> representations) {
+        this.representations = representations;
     }
 }
-

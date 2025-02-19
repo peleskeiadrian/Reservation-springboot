@@ -15,6 +15,7 @@ public class LocalityController {
     @Autowired
     LocalityService service;
 
+
     @GetMapping("/localities")
     public String index2(Model model) {
         List<Locality> localities = service.getAll();
@@ -35,6 +36,6 @@ public class LocalityController {
         return "locality/show";
     }
 
-
 }
+
 

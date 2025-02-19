@@ -1,6 +1,5 @@
 package reservationspringboot.model;
 
-import com.github.slugify.Slugify;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -8,24 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="representations")
+@Table(name = "representations")
 public class Representation {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="show_id", nullable=false)
+    @JoinColumn(name = "show_id", nullable = false)
     private Show show;
-
-    @ManyToMany
-    @JoinTable(
-            name = "reservations",
-            joinColumns = @JoinColumn(name = "representation_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> users = new ArrayList<>();
-
-
 
     /**
      * Date de création de la représentation
@@ -36,10 +26,19 @@ public class Representation {
      * Lieu de prestation de la représentation
      */
     @ManyToOne
-    @JoinColumn(name="location_id", nullable=true)
+    @JoinColumn(name = "location_id", nullable = true)
     private Location location;
 
-    public Representation() { }
+    @ManyToMany
+    @JoinTable(
+            name = "reservations",
+            joinColumns = @JoinColumn(name = "representation_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<User> users = new ArrayList<>();
+
+
+    public Representation() {
+    }
 
     public Representation(Show show, LocalDateTime when, Location location) {
         this.show = show;
@@ -80,7 +79,7 @@ public class Representation {
     }
 
     public Representation addUser(User user) {
-        if(!this.users.contains(user)) {
+        if (!this.users.contains(user)) {
             this.users.add(user);
             user.addRepresentation(this);
         }
@@ -89,7 +88,7 @@ public class Representation {
     }
 
     public Representation removeUser(User user) {
-        if(this.users.contains(user)) {
+        if (this.users.contains(user)) {
             this.users.remove(user);
             user.getRepresentations().remove(this);
         }
@@ -105,4 +104,5 @@ public class Representation {
     }
 
 }
+
 
