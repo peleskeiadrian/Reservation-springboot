@@ -1,5 +1,6 @@
 package reservationspringboot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -30,6 +31,7 @@ public class Artist {
     @Size(min = 2, max = 60, message = "The firstname must be between 2 and 60 characters long.")
     private String lastname;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
         name = "artist_type",

@@ -1,5 +1,6 @@
 package reservationspringboot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ public class Representation {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+
     @ManyToOne
     @JoinColumn(name = "show_id", nullable = false)
     private Show show;
@@ -25,9 +27,11 @@ public class Representation {
     /**
      * Lieu de prestation de la représentation
      */
+
     @ManyToOne
     @JoinColumn(name = "location_id", nullable = true)
     private Location location;
+
 
     @ManyToMany
     @JoinTable(

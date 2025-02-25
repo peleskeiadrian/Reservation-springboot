@@ -1,5 +1,7 @@
 package reservationspringboot.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
@@ -13,19 +15,24 @@ public class ArtistType {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="artist_id", nullable=false)
+
     private Artist artist;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="type_id", nullable=false)
     private Type type;
 
+    @JsonIgnore
     @ManyToMany(targetEntity=Show.class)
     @JoinTable(
             name = "artist_type_show",
             joinColumns = @JoinColumn(name = "artist_type_id"),
             inverseJoinColumns = @JoinColumn(name = "show_id"))
+
     private List<Show> shows = new ArrayList<>();
 
 

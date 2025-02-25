@@ -1,5 +1,6 @@
 package reservationspringboot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.slugify.Slugify;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,7 @@ public class Show {
 
 
     @ManyToMany(mappedBy = "shows")
+    @JsonIgnore
     private List<ArtistType> artistTypes = new ArrayList<>();
 
     /**

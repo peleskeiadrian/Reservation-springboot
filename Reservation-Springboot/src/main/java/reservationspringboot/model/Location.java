@@ -1,5 +1,6 @@
 package reservationspringboot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.slugify.Slugify;
 import jakarta.persistence.*;
 
@@ -18,6 +19,7 @@ public class Location {
 
     private String designation;
     private String address;
+
 
     @ManyToOne
     @JoinColumn(name="locality_id", nullable=false)

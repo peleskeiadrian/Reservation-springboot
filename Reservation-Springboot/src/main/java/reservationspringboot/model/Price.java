@@ -1,5 +1,6 @@
 package reservationspringboot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -36,6 +37,7 @@ public class Price {
     private Set<RepresentationReservation> representation_reservation;
 
     // Relation Many to Many
+
     @ManyToMany
     @JoinTable(
             name = "price_shows",
