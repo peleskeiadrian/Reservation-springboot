@@ -13,23 +13,23 @@
   <div layout:fragment="content">
     <h1>Nouvel artiste</h1>
 
-    <form th:action="@{/artists/create}" th:object="${artist}" method="post">
+    <form th:action="@{/artists/create}" th:object="${artists}" method="post">
       <div>
         <label>Id:</label>
-        <span th:text="${artist.id}">1</span>
+        <span th:text="${artists.id}">1</span>
       </div>
 
       <div>
         <label>Firstname:</label>
-        <input type="text" th:field="*{artists.firstname}">
+        <input type="text" th:field="*{firstname}">
         <p th:if="${#fields.hasErrors('firstname')}"
-           th:errors="*{artists.firstname}" th:errorclass="fieldError"></p>
+           th:errors="*{firstname}" th:errorclass="fieldError"></p>
       </div>
       <div>
         <label>Lastname:</label>
-        <input type="text" th:field="*{artists.lastname}">
+        <input type="text" th:field="*{lastname}">
         <p th:if="${#fields.hasErrors('lastname')}"
-           th:errors="*{artists.lastname}" th:errorclass="fieldError"></p>
+           th:errors="*{lastname}" th:errorclass="fieldError"></p>
       </div>
       <div>
         <button type="submit" th:text="Ajouter">Ajouter</button>

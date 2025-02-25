@@ -42,7 +42,7 @@ public class Price {
             joinColumns = @JoinColumn(name = "price_id"),
             inverseJoinColumns = @JoinColumn(name = "show_id")
     )
-    List<Show> show;
+    List<Show> shows = new ArrayList<>();
 
     // Constructor with params
     public Price(Long id, String type, Double price, LocalDate start_date, LocalDate end_date) {

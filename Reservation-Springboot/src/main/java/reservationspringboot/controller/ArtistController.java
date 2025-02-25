@@ -32,24 +32,24 @@ public class ArtistController {
     }
     @GetMapping("/artists/{id}")
     public String show(Model model, @PathVariable("id") long id) {
-        Artist artist = service.getArtist(id);
+        Artist artist = service.findById(id);
 
-        model.addAttribute("artist", artist);
+        model.addAttribute("artists", artist);
         model.addAttribute("title", "Fiche d'un artiste");
 
         return "artists/show";
     }
     @GetMapping("/artists/{id}/edit")
-    public String edit(Model model, @PathVariable long id, HttpServletRequest request) {
-        Artist artist = service.getArtist(id);
+    public String edit(Model model, @PathVariable("id") long id, HttpServletRequest request) {
+        Artist artist = service.findById(id);
 
-        model.addAttribute("artists", artist);
+        model.addAttribute("artist", artist);
 
 
         //Générer le lien retour pour l'annulation
         String referrer = request.getHeader("Referer");
 
-        if(referrer!=null && !referrer.equals("")) {
+        if(referrer!=null && !referrer.isEmpty()) {
             model.addAttribute("back", referrer);
         } else {
             model.addAttribute("back", "/artists/"+artist.getId());

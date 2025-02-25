@@ -7,14 +7,18 @@
 <body>
 <div class="container">
   <div layout:fragment="content">
-    <h1 th:text="|${artist.firstname}  ${artist.lastname}|">Bob Sull</h1>
+    <h1 th:if="${artists != null}" th:text="|${artists.firstname} ${artists.lastname}|">Nom inconnu</h1>
+    <h1 th:if="${artists == null}">Artiste non trouvé</h1>
 
     <h2>Liste des types</h2>
-    <ul th:unless="${#lists.isEmpty(artist.types)}">
-      <li th:each="type : ${artist.types}" th:text="${type.type}">Type</li>
+    <ul>
+      <li th:each="type : ${artists.types}" th:text="${type.type}">Type</li>
+      <li th:if="${artists == null || #lists.isEmpty(artists.types)}">Aucun type disponible</li>
     </ul>
 
-    <nav><a th:href="@{/artists}">Retour à l'index</a></nav>
+    <nav>
+      <a th:href="@{/artists}">Retour à l'index</a>
+    </nav>
   </div>
 </div>
 </body>

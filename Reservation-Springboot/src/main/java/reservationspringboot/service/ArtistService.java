@@ -21,10 +21,18 @@ public class ArtistService {
         return artists;
     }
 
-    public Artist getArtist(long id) {
-        int indice = Integer.parseInt(String.valueOf(id));
+    public List<Artist> findAll() {
+        return (List<Artist>) artistRepository.findAll();
+    }
 
-        return artistRepository.findById(indice);
+    public Artist findById(Long id) {
+        return artistRepository.findById(id).orElse(null);
+    }
+
+
+
+public Artist getArtist(long id) {
+        return artistRepository.findById(id);
     }
 
     public void addArtist(Artist artist) {
@@ -36,9 +44,7 @@ public class ArtistService {
     }
 
     public void deleteArtist(long id) {
-        Long indice = (long) Integer.parseInt(String.valueOf(id));
-
-        artistRepository.deleteById(indice);
+        artistRepository.deleteById(id);
     }
 }
 

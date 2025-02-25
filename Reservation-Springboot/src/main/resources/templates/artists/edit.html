@@ -16,7 +16,7 @@
         <form th:action="@{/artists/{id}/edit(id=${artist.id})}" th:object="${artist}" th:method="put">
             <div>
                 <label>Id:</label>
-                <span th:text="${artist.id}">1</span>
+                <span th:text="${id}">1</span>
             </div>
             <div>
                 <label>Firstname:</label>

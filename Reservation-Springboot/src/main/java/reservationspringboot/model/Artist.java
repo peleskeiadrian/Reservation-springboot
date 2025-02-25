@@ -15,20 +15,28 @@ import java.util.Objects;
 @Entity
 @Table(name = "artists")
 public class Artist {
+    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter
     @NotEmpty(message = "The firstname must not be empty.")
     @Size(min = 2, max = 60, message = "The firstname must be between 2 and 60 characters long.")
     private String firstname;
 
+    @Setter
     @NotEmpty(message = "The lastname must not be empty.")
     @Size(min = 2, max = 60, message = "The firstname must be between 2 and 60 characters long.")
     private String lastname;
 
-    @ManyToMany(mappedBy = "artists")
-    private List<ArtistType> types = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(
+        name = "artist_type",
+        joinColumns = @JoinColumn(name = "artist_id"),
+        inverseJoinColumns = @JoinColumn(name = "type_id")
+    )
+    private List<ArtistType> artist_type = new ArrayList<>();
 
 
     public Artist(String firstname, String lastname) {
@@ -45,22 +53,10 @@ public class Artist {
     public Artist() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
 
     public Artist removeType(Type type) {
-        if (this.types.contains(type)) {
-            this.types.remove(type);
+        if (this.artist_type.contains(type)) {
+            this.artist_type.remove(type);
             type.getArtists().remove(this);
         }
 
@@ -69,7 +65,7 @@ public class Artist {
 
 
     public List<ArtistType> getTypes() {
-        return types;
+        return artist_type;
     }
 
     @Override
@@ -90,5 +86,33 @@ public class Artist {
     @Override
     public final int hashCode() {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public List<ArtistType> getArtist_type() {
+        return artist_type;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public void setArtist_type(List<ArtistType> artist_type) {
+        this.artist_type = artist_type;
     }
 }

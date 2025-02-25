@@ -13,7 +13,7 @@ import reservationspringboot.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Service("configCustomUserDetailsService")
 public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
