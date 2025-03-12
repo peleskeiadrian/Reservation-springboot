@@ -81,7 +81,7 @@ public class Artist {
         return getId() != null && Objects.equals(getId(), artist.getId());
     }
 
-    public Object getId() {
+    public Long getId() {
         return id;
     }
 
